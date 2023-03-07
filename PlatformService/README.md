@@ -15,4 +15,4 @@
 ## Repository
 - A repository comprises of an interface for user to interact with the database via `DbContext`.
 - `IPlatformRepo` is the interface class defining the available APIs
-- `PlatformRepo` is the class defining the logic of interactions with the AppDbContext
+- `PlatformRepo` is the concrete class defining the logic of interactions with the AppDbContext
