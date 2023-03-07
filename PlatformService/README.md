@@ -16,3 +16,9 @@
 - A repository comprises of an interface for user to interact with the database via `DbContext`.
 - `IPlatformRepo` is the interface class defining the available APIs
 - `PlatformRepo` is the concrete class defining the logic of interactions with the AppDbContext
+
+## DTOs
+- The external representations of our data (vs `Models` which consists of the internal representations)
+- Why do we differentiate these two?
+    - **Data Privacy**: we do not want clients to know the internal structure of our data
+    - **Contractual Coupling**: we might want to change the internal structure of data without disrupting the contract between us and clients
