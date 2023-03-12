@@ -18,12 +18,12 @@ namespace PlatformService.Data
                 context.Platforms.AddRange(
                     new Models.Platform() {
                         Name=".NET", 
-                        Publisher="Microsfot",
+                        Publisher="Microsoft",
                         Cost="Free"
                     },
                     new Models.Platform() {
                         Name="SQL Server Express", 
-                        Publisher="Microsfot",
+                        Publisher="Microsoft",
                         Cost="Free"
                     },
                     new Models.Platform() {
