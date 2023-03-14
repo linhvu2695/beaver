@@ -32,4 +32,7 @@
 
 ## Kubernetes
 - Create `k8s/platforms-depl.taml`
-- Deploy service: `kubectl apply -f platforms-depl.yaml`                   
+- Deploy service: 
+    - `kubectl apply -f platforms-depl.yaml`
+    - `kubectl apply -f platforms-np-srv.yaml`
+                       
