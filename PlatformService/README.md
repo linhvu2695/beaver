@@ -37,4 +37,9 @@
     - `kubectl apply -f commands-depl.yaml`
     - `kubectl apply -f platforms-np-srv.yaml`
 - Connect platforms service to commands service using `PlatformService/appsettings.Production.json`
+
+## Nginx Ingress
+ - Deploy: https://kubernetes.github.io/ingress-nginx/deploy/ 
+ - Create `ingress-srv.yaml`
+ - Associate domain name `beaver.com` to loopback IP address `127.0.0.1` by adding to file `/etc/hosts`: `127.0.0.1 beaver.com`
                        
