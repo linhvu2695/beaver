@@ -31,8 +31,10 @@
 - Run instance `docker run --name beaver-platformservice -p 8080:80 -d vlinh/beaver-platformservice`
 
 ## Kubernetes
-- Create `k8s/platforms-depl.taml`
+- Create `k8s/platforms-depl.yaml`
 - Deploy service: 
     - `kubectl apply -f platforms-depl.yaml`
+    - `kubectl apply -f commands-depl.yaml`
     - `kubectl apply -f platforms-np-srv.yaml`
+- Connect platforms service to commands service using `PlatformService/appsettings.Production.json`
                        
