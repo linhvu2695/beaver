@@ -3,6 +3,8 @@
 
 ## Codebase
 
+![PlatformService structure](images/PlatformService_structure.png)
+
 ### 1. Import packages
 - `dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection`
 - `dotnet add package Microsoft.EntityFrameworkCore`
@@ -25,12 +27,14 @@
     - **Data Privacy**: we do not want clients to know the internal structure of our data
     - **Contractual Coupling**: we might want to change the internal structure of data without disrupting the contract between us and clients
 
-## Dockerize
+## Docker
+
+### 1. Dockerize
 - Create `Dockerfile`
 - Build image: `docker build -t vlinh/beaver-platformservice .`
 - Run instance `docker run --name beaver-platformservice -p 8080:80 -d vlinh/beaver-platformservice`
 
-## Kubernetes
+### 2. Kubernetes
 - Create `k8s/platforms-depl.yaml`
 - Deploy service: 
     - `kubectl apply -f platforms-depl.yaml`
@@ -38,7 +42,7 @@
     - `kubectl apply -f platforms-np-srv.yaml`
 - Connect platforms service to commands service using `PlatformService/appsettings.Production.json`
 
-## Nginx Ingress
+### 3. Nginx Ingress
  - Deploy: https://kubernetes.github.io/ingress-nginx/deploy/ 
  - Create `ingress-srv.yaml`
  - Associate domain name `beaver.com` to loopback IP address `127.0.0.1` by adding to file `/etc/hosts`: `127.0.0.1 beaver.com`
