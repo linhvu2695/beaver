@@ -27,7 +27,7 @@
     - **Data Privacy**: we do not want clients to know the internal structure of our data
     - **Contractual Coupling**: we might want to change the internal structure of data without disrupting the contract between us and clients
 
-## Docker
+## Docker/Kubernetes
 
 ### 1. Dockerize
 - Create `Dockerfile`
@@ -44,6 +44,23 @@
 
 ### 3. Nginx Ingress
  - Deploy: https://kubernetes.github.io/ingress-nginx/deploy/ 
- - Create `ingress-srv.yaml`
+ - Create `k8s/ingress-srv.yaml`
  - Associate domain name `beaver.com` to loopback IP address `127.0.0.1` by adding to file `/etc/hosts`: `127.0.0.1 beaver.com`
+
+## SQL Server Database
+
+### 1. PersistentVolumeClaim
+- Create `k8s/local-pvc.yaml`
+
+### 2. Secret
+- Create secret for MSSQL password: `kubectl apply -f mssql-secret.yaml"`
+
+### 3. Deployment
+- Create `k8s/mssql-plat-depl.yaml` 
+- Take note that `mcr.microsoft.com/mssql/server:2019-latest` cannot run on M1. The only possible way is to use Azure SQL (https://stackoverflow.com/questions/65398641/docker-connect-sql-server-container-non-zero-code-1)
+- We have a LoadBalancer service which enable accessing the database container via `localhost:1433` (can use SSMS or Azure Studio to access)
+
+### 4. Connect PlatformService to MsSql
+- Add ConnectionString in `appsettings.Production.json`
+- Add migration: `dotnet ef migrations add initialmigration` (trick the app by commenting out certain parts and add them back later)
                        
