@@ -77,3 +77,4 @@
 /Users/vlinh/Code/personal/projects/microservices/beaver/PlatformService/obj/Debug/net7.0/PlatformService.pdb
 /Users/vlinh/Code/personal/projects/microservices/beaver/PlatformService/obj/Debug/net7.0/PlatformService.genruntimeconfig.cache
 /Users/vlinh/Code/personal/projects/microservices/beaver/PlatformService/obj/Debug/net7.0/ref/PlatformService.dll
+/Users/vlinh/Code/personal/projects/microservices/beaver/PlatformService/bin/Debug/net7.0/appsettings.Production.json
