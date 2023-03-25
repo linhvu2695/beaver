@@ -1,3 +1,5 @@
+#nullable disable
+
 namespace PlatformService.DTOs
 {
     public class PlatformCreateDto

@@ -64,3 +64,22 @@
 - Add ConnectionString in `appsettings.Production.json`
 - Add migration: `dotnet ef migrations add initialmigration` (trick the app by commenting out certain parts and add them back later)
                        
+## RabbitMQ 
+
+### 1. Deployment
+- Create `k8s/rabbitmq-depl.yaml`
+- RabbitMQ has 2 ports: `5672` for internal communication (clusterip-srv) and `15672` for external management (loadbalancer)
+
+### 2. Asynchronous Service in PlatformService
+- Add configs in `appsettings` files
+- Create the required classes for interacting with RabbitMQ
+    - `IMessageBusClient`: interface
+    - `MessageBusClient`: concrete class with methods to publish message to RabbitMQ
+    - `PlatformPublishedDto`
+
+### 3. Asynchronous Service in CommandService
+- Add configs in `appsettings` files
+- Create the required classes for interacting with RabbitMQ
+    - `PlatformPublishedDto`
+    - `GenericEventDto`
+- Map from `PlatformPublishedDto.Id` to `Platform.ExternalId`
