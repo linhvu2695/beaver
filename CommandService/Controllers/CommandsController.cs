@@ -34,7 +34,7 @@ namespace CommandService.Controllers
             return Ok(_mapper.Map<IEnumerable<CommandReadDto>>(commands));
         }
 
-        [HttpGet("{commandId}", Name = "GetCommandPlatform")]
+        [HttpGet("{commandId}", Name = "GetCommandForPlatform")]
         public ActionResult<CommandReadDto> GetCommandForPlatform(int platformId, int commandId)
         {
             System.Console.WriteLine($"---> Get Command {commandId} for Platform {platformId}...");
@@ -51,7 +51,7 @@ namespace CommandService.Controllers
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<CommandCreateDto>(command));
+            return Ok(_mapper.Map<CommandReadDto>(command));
         }
 
         [HttpPost]
@@ -70,7 +70,7 @@ namespace CommandService.Controllers
             var commandReadDto = _mapper.Map<CommandReadDto>(commandModel);
 
             return CreatedAtRoute(nameof(GetCommandForPlatform), 
-                new { platformId = commandReadDto.PlatformId, commandId = commandReadDto.Id}, commandReadDto);
+                new { platformId = platformId, commandId = commandReadDto.Id}, commandReadDto);
         }
     }
 }
