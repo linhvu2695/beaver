@@ -6,11 +6,7 @@
 ![PlatformService structure](images/PlatformService_structure.png)
 
 ### 1. Import packages
-- `dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection`
-- `dotnet add package Microsoft.EntityFrameworkCore`
-- `dotnet add package Microsoft.EntityFrameworkCore.Design`
-- `dotnet add package Microsoft.EntityFrameworkCore.InMemory`
-- `dotnet add package Microsoft.EntityFrameworkCore.SqlServer`
+- `dotnet add package <package_name>`
 
 ### 2. DbContext
 - A DbContext instance represents a session with the database and can be used to query and save instances of your entities.
@@ -37,9 +33,7 @@
 ### 2. Kubernetes
 - Create `k8s/platforms-depl.yaml`
 - Deploy service: 
-    - `kubectl apply -f platforms-depl.yaml`
-    - `kubectl apply -f commands-depl.yaml`
-    - `kubectl apply -f platforms-np-srv.yaml`
+    - `kubectl apply -f <yaml_filename>`
 - Connect platforms service to commands service using `PlatformService/appsettings.Production.json`
 
 ### 3. Nginx Ingress
@@ -87,8 +81,11 @@
 
 ## Grpc
 
-### 1. Service
-- Add Grpc port (111) for both PlatformService & CommandService
+### 1. Both PlatformService & CommandService
+- Import neccessary .NET packages
+- Add Grpc port (111) to YAML files
+- Add proto files 
+- Add proto files path in `.csproj` files so the applications know where to find them
 
-### 2. Protofile
-- Add proto files for PlatformService & CommandService
+### 2. CommandService
+- Add Grpc server address in config files (`appsettings.json` files)

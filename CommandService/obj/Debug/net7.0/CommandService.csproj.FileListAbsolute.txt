@@ -44,3 +44,7 @@
 /Users/vlinh/Code/personal/projects/microservices/beaver/CommandService/obj/Debug/net7.0/ref/CommandService.dll
 /Users/vlinh/Code/personal/projects/microservices/beaver/CommandService/bin/Debug/net7.0/appsettings.Production.json
 /Users/vlinh/Code/personal/projects/microservices/beaver/CommandService/bin/Debug/net7.0/RabbitMQ.Client.dll
+/Users/vlinh/Code/personal/projects/microservices/beaver/CommandService/bin/Debug/net7.0/Google.Protobuf.dll
+/Users/vlinh/Code/personal/projects/microservices/beaver/CommandService/bin/Debug/net7.0/Grpc.Core.Api.dll
+/Users/vlinh/Code/personal/projects/microservices/beaver/CommandService/bin/Debug/net7.0/Grpc.Net.Client.dll
+/Users/vlinh/Code/personal/projects/microservices/beaver/CommandService/bin/Debug/net7.0/Grpc.Net.Common.dll
