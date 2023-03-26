@@ -79,3 +79,10 @@
 /Users/vlinh/Code/personal/projects/microservices/beaver/PlatformService/obj/Debug/net7.0/ref/PlatformService.dll
 /Users/vlinh/Code/personal/projects/microservices/beaver/PlatformService/bin/Debug/net7.0/appsettings.Production.json
 /Users/vlinh/Code/personal/projects/microservices/beaver/PlatformService/bin/Debug/net7.0/RabbitMQ.Client.dll
+/Users/vlinh/Code/personal/projects/microservices/beaver/PlatformService/bin/Debug/net7.0/Google.Protobuf.dll
+/Users/vlinh/Code/personal/projects/microservices/beaver/PlatformService/bin/Debug/net7.0/Grpc.AspNetCore.Server.dll
+/Users/vlinh/Code/personal/projects/microservices/beaver/PlatformService/bin/Debug/net7.0/Grpc.AspNetCore.Server.ClientFactory.dll
+/Users/vlinh/Code/personal/projects/microservices/beaver/PlatformService/bin/Debug/net7.0/Grpc.Core.Api.dll
+/Users/vlinh/Code/personal/projects/microservices/beaver/PlatformService/bin/Debug/net7.0/Grpc.Net.Client.dll
+/Users/vlinh/Code/personal/projects/microservices/beaver/PlatformService/bin/Debug/net7.0/Grpc.Net.ClientFactory.dll
+/Users/vlinh/Code/personal/projects/microservices/beaver/PlatformService/bin/Debug/net7.0/Grpc.Net.Common.dll

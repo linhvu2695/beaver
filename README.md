@@ -84,3 +84,11 @@
     - `GenericEventDto`
     - `MessageBUsSubscriber`: subscribe to queues in RabbitMQ
     - `EventProcessor`: process events 
+
+## Grpc
+
+### 1. Service
+- Add Grpc port (111) for both PlatformService & CommandService
+
+### 2. Protofile
+- Add proto files for PlatformService & CommandService
