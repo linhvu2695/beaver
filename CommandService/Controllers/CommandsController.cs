@@ -60,12 +60,14 @@ namespace CommandService.Controllers
             System.Console.WriteLine("--> Creating Command...");
             if (!_repository.PlatformExists(platformId))
             {
-                return BadRequest();
+                return NotFound();
             }
             var commandModel = _mapper.Map<Command>(commandCreateDto);
 
             _repository.CreateCommand(platformId, commandModel);
             _repository.SaveChanges();
+
+            // TODO: Add Command to Platform.Commands
 
             var commandReadDto = _mapper.Map<CommandReadDto>(commandModel);
 

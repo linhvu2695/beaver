@@ -73,13 +73,14 @@
 ### 2. Asynchronous Service in PlatformService
 - Add configs in `appsettings` files
 - Create the required classes for interacting with RabbitMQ
-    - `IMessageBusClient`: interface
-    - `MessageBusClient`: concrete class with methods to publish message to RabbitMQ
     - `PlatformPublishedDto`
+    - `MessageBusClient`: publish message to RabbitMQ
+    
 
 ### 3. Asynchronous Service in CommandService
 - Add configs in `appsettings` files
 - Create the required classes for interacting with RabbitMQ
     - `PlatformPublishedDto`
     - `GenericEventDto`
-- Map from `PlatformPublishedDto.Id` to `Platform.ExternalId`
+    - `MessageBUsSubscriber`: subscribe to queues in RabbitMQ
+    - `EventProcessor`: process events 

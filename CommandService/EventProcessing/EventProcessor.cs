@@ -8,9 +8,18 @@ using CommandService.Models;
 
 namespace CommandService.EventProcessing
 {
+    # region Const
+    public class Const
+    {
+        public const string EVENT_PLATFORM_CREATE = "Platform_Create";
+        public const string EVENT_PLATFORM_UPDATE = "Platform_Update";
+    }
+    # endregion
+
     enum EventType
     {
-        PlaformPublished,
+        PlaformCreate,
+        PlatformUpdate,
         Undetermined
     }
 
@@ -30,8 +39,11 @@ namespace CommandService.EventProcessing
 
             switch (eventType)
             {
-                case EventType.PlaformPublished:
+                case EventType.PlaformCreate:
                     addPlatform(message);
+                    break;
+                case EventType.PlatformUpdate:
+                    updatePlatform(message);
                     break;
                 default:
                     break;
@@ -45,9 +57,12 @@ namespace CommandService.EventProcessing
 
             switch(eventType.Event)
             {
-                case "Platform_Published":
-                    System.Console.WriteLine("---> Platform Published Event detected");
-                    return EventType.PlaformPublished;
+                case Const.EVENT_PLATFORM_CREATE:
+                    System.Console.WriteLine("---> Platform Create Event detected");
+                    return EventType.PlaformCreate;
+                case Const.EVENT_PLATFORM_UPDATE:
+                    System.Console.WriteLine("---> Platform Update Event detected");
+                    return EventType.PlatformUpdate;
                 default:
                     System.Console.WriteLine("---> Could not determine the event type");
                     return EventType.Undetermined;
@@ -73,6 +88,36 @@ namespace CommandService.EventProcessing
                     else
                     {
                         System.Console.WriteLine("---> Platform already exists...");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Console.WriteLine($"---> Could not add Platform to DB: {ex.Message}");
+                }
+            }
+        }
+
+        private void updatePlatform(string platformPublishedMessage)
+        {
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var repo = scope.ServiceProvider.GetRequiredService<ICommandRepo>();
+
+                var platformPublishedDto = JsonSerializer.Deserialize<PlatformPublishedDto>(platformPublishedMessage);
+                try
+                {
+                    var plat = _mapper.Map<Platform>(platformPublishedDto);
+                    if (!repo.ExternalPlatformExists(plat.ExternalID))
+                    {
+                        repo.CreatePlatform(plat);
+                        repo.SaveChanges();
+                        System.Console.WriteLine("---> Platform Added");
+                    }
+                    else
+                    {
+                        repo.UpdatePlatform(plat);
+                        repo.SaveChanges();
+                        System.Console.WriteLine("---> Platform Updated");
                     }
                 }
                 catch (Exception ex)

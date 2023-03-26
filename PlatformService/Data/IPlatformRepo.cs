@@ -11,5 +11,9 @@ namespace PlatformService.Data
         Platform? GetPlatformById(int id);
 
         void CreatePlatform(Platform p);
+
+        bool PlatformExists(int platformId);
+
+        void UpdatePlatform(Platform platform);
     }
 }

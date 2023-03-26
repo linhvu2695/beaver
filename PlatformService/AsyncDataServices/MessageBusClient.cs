@@ -9,17 +9,25 @@ namespace PlatformService.AsyncDataService
 {
     public class MessageBusClient : IMessageBusClient
     {
+        # region Const
+        public class Const
+        {
+            public const string EXCHANGE_NAME = "trigger";
+            public const string CONFIG_RABBITMQ_HOST = "RabbitMQHost";
+            public const string CONFIG_RABBITMQ_PORT = "RabbitMQPort";
+        }
+        #endregion
+
         private readonly IConfiguration _configuration;
         private readonly IConnection _connection;
         private readonly IModel _channel;
-        private const string EXCHANGE_NAME = "trigger";
 
         public MessageBusClient(IConfiguration configuration)
         {
             _configuration = configuration;
             var factory = new ConnectionFactory() {
-                HostName = _configuration["RabbitMQHost"], 
-                Port = int.Parse(_configuration["RabbitMQPort"])
+                HostName = _configuration[Const.CONFIG_RABBITMQ_HOST], 
+                Port = int.Parse(_configuration[Const.CONFIG_RABBITMQ_PORT])
             };
 
             try
@@ -28,7 +36,7 @@ namespace PlatformService.AsyncDataService
                 _channel = _connection.CreateModel();
 
                 _channel.ExchangeDeclare(
-                    exchange: EXCHANGE_NAME,
+                    exchange: Const.EXCHANGE_NAME,
                     type: ExchangeType.Fanout
                 );
 
@@ -41,7 +49,7 @@ namespace PlatformService.AsyncDataService
                 System.Console.WriteLine($"---> Fail to connect to Message Bus: {ex.Message}");
             }
         }
-        public void PublishNewPlatform(PlatformPublishedDto platformPublishedDto)
+        public void PublishPlatform(PlatformPublishedDto platformPublishedDto)
         {
             var message = JsonSerializer.Serialize(platformPublishedDto);
 
@@ -62,7 +70,7 @@ namespace PlatformService.AsyncDataService
             var body = Encoding.UTF8.GetBytes(message);
 
             _channel.BasicPublish(
-                exchange: EXCHANGE_NAME,
+                exchange: Const.EXCHANGE_NAME,
                 routingKey: "",
                 basicProperties: null,
                 body: body

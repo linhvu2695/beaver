@@ -9,12 +9,20 @@ namespace CommandService.AsyncDataServices
 {
     public class MessageBusSubscriber : BackgroundService
     {
+        # region Const
+        public class Const
+        {
+            public const string EXCHANGE_NAME = "trigger";
+            public const string CONFIG_RABBITMQ_HOST = "RabbitMQHost";
+            public const string CONFIG_RABBITMQ_PORT = "RabbitMQPort";
+        }
+        #endregion
+
         private readonly IConfiguration _configuration;
         private readonly IEventProcessor _eventProcessor;
         private IConnection _connection;
         private IModel _channel;
         private string _queueName;
-        private const string EXCHANGE_NAME = "trigger";
 
         public MessageBusSubscriber(IConfiguration configuration, IEventProcessor eventProcessor)
         {
@@ -27,24 +35,25 @@ namespace CommandService.AsyncDataServices
         private void InitializeRabbitMQ()
         {
             var factory = new ConnectionFactory() {
-                HostName = _configuration["RabbitMQHost"], 
-                Port = int.Parse(_configuration["RabbitMQPort"])
+                HostName = _configuration[Const.CONFIG_RABBITMQ_HOST], 
+                Port = int.Parse(_configuration[Const.CONFIG_RABBITMQ_PORT])
             };
 
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
 
             _channel.ExchangeDeclare(
-                    exchange: EXCHANGE_NAME,
+                    exchange: Const.EXCHANGE_NAME,
                     type: ExchangeType.Fanout
                 );
             _queueName = _channel.QueueDeclare().QueueName;
-            _channel.QueueBind(queue: _queueName, exchange: EXCHANGE_NAME, routingKey: "");
+            _channel.QueueBind(queue: _queueName, exchange: Const.EXCHANGE_NAME, routingKey: "");
 
             System.Console.WriteLine("---> Listening on the Message Bus...");
 
             _connection.ConnectionShutdown += RabbitMQ_ConnectionShutdown;
         }
+
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             stoppingToken.ThrowIfCancellationRequested();

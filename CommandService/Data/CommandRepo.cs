@@ -56,6 +56,16 @@ namespace CommandService.Data
             return _context.Platforms.Any(p => p.Id == platformId);
         }
 
+        public void UpdatePlatform(Platform platform)
+        {
+            if (platform == null)
+            {
+                throw new ArgumentNullException(nameof(platform));
+            } 
+            var p = _context.Platforms.FirstOrDefault(p => p.ExternalID == platform.ExternalID);
+            p.Name = platform.Name;            
+        }
+
         public bool SaveChanges()
         {
             return _context.SaveChanges() >= 0;

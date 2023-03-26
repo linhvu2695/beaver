@@ -12,6 +12,14 @@ namespace PlatformService.Controllers
     [ApiController]
     public class PlatformsController : ControllerBase
     {
+        # region Const
+        public class Const
+        {
+            public const string EVENT_PLATFORM_CREATE = "Platform_Create";
+            public const string EVENT_PLATFORM_UPDATE = "Platform_Update";
+        }        
+        # endregion
+
         private readonly IPlatformRepo _repository;
         private readonly IMapper _mapper;
         private readonly ICommandDataClient _commandDataClient;
@@ -73,8 +81,41 @@ namespace PlatformService.Controllers
             try 
             {
                 var platformPublishedDto = _mapper.Map<PlatformPublishedDto>(platformReadDto);
-                platformPublishedDto.Event = "Platform_Published";
-                _messageBusClient.PublishNewPlatform(platformPublishedDto);
+                platformPublishedDto.Event = Const.EVENT_PLATFORM_CREATE;
+                _messageBusClient.PublishPlatform(platformPublishedDto);
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($"---> Could not send asynchronously: {ex.Message}");
+            }
+
+            return CreatedAtRoute(nameof(GetPlatformById), new { Id = platformReadDto.Id}, platformReadDto);
+        }
+
+        // Can only update Platform.Name
+        [HttpPut("{id}")]
+        public ActionResult<PlatformUpdateDto> UpdatePlatform(int id, PlatformUpdateDto platformUpdateDto)
+        {
+            System.Console.WriteLine($"--> Updating Platform {id}...");
+
+            if (!_repository.PlatformExists(id))
+            {
+                return NotFound();
+            }
+
+            var platformModel = _mapper.Map<Platform>(platformUpdateDto);
+            platformModel.Id = id;
+            _repository.UpdatePlatform(platformModel);
+            _repository.SaveChanges();
+
+            var platformReadDto = _mapper.Map<PlatformReadDto>(platformModel);
+
+            // Asynchronously send data to RabbitMQ
+            try 
+            {
+                var platformPublishedDto = _mapper.Map<PlatformPublishedDto>(platformReadDto);
+                platformPublishedDto.Event = Const.EVENT_PLATFORM_UPDATE;
+                _messageBusClient.PublishPlatform(platformPublishedDto);
             }
             catch (Exception ex)
             {
