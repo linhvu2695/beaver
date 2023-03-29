@@ -2,6 +2,7 @@
 
 using AutoMapper;
 using CommandService.Models;
+using Grpc.Core.Interceptors;
 using Grpc.Net.Client;
 using PlatformService;
 
@@ -26,9 +27,18 @@ namespace CommandService.SyncDataServices.Grpc
         }
         public IEnumerable<Platform> ReturnAllPlatforms()
         {
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole();
+            });
+
             System.Console.WriteLine($"---> Calling GRPC service {_configuration[Const.CONFIG_GRPC_PLATFORM]}");
             var channel = GrpcChannel.ForAddress(_configuration[Const.CONFIG_GRPC_PLATFORM]);
-            var client = new GrpcPlatform.GrpcPlatformClient(channel);
+
+            // channel.Intercept(interceptor);
+            var invoker = channel.Intercept(new ClientLoggingInterceptor(loggerFactory));
+
+            var client = new GrpcPlatform.GrpcPlatformClient(invoker);
             var request = new GetAllRequest();
 
             try 

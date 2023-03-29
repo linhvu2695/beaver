@@ -11,12 +11,14 @@ namespace PlatformService.SyncDataServices.GrpcPlatformService
 
         public GrpcPlatformService(IPlatformRepo repository, IMapper mapper)
         {
+            System.Console.WriteLine("---> Setting up GrpcPlatformService");
             _repository = repository;
             _mapper = mapper;
         }
 
         public override Task<PlatformResponse> GetAllPlatform(GetAllRequest request, ServerCallContext context)
         {
+            System.Console.WriteLine("---> CommandService request getting all platforms...");
             var response = new PlatformResponse();
             var platforms = _repository.GetAllPlatforms();
 

@@ -39,13 +39,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
 app.MapGrpcService<GrpcPlatformService>();
-app.MapGet("/protos/platforms.proto", async context =>
+app.MapGet("/Protos/platforms.proto", async context =>
     {
         await context.Response.WriteAsync(File.ReadAllText("Protos/platforms.proto"));
     });
