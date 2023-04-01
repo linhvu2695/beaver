@@ -29,6 +29,8 @@
 
 ## Docker/Kubernetes
 
+![Kubernetes structure](images/Kubernetes_structure.png)
+
 ### 1. Dockerize
 - Create `Dockerfile`
 - Build image: `docker build -t vlinh/beaver-platformservice .`
